@@ -11,10 +11,13 @@ List.destroy_all
 Board.destroy_all
 
 board1 = Board.create(title: 'Backend')
-board2 = Board.create(title: 'Frontend')
+
 
 list1 = List.create(title: 'List 1 title', board_id: board1.id)
-list2 = List.create(title: 'List 2 title', board_id: board2.id)
+list2 = List.create(title: 'List 2 title', board_id: board1.id)
 
 card1 = Card.create(title: 'First card', description: "Here's a full description", list_id: list1.id)
-card1 = Card.create(title: 'First card', description: "Here's a full description", list_id: list2.id)
+card1 = Card.create(title: 'First card', description: "Here's a full description", list_id: list1.id)
+card3 = Card.create(title: 'Third card', description: "Here's a full description", list_id: list2.id)
+card4 = Card.create(title: 'Fourth card', description: "Here's a full description", list_id: list2.id)
+card5 = Card.create(title: 'Fifth card', description: "Here's a full description", list_id: list2.id)
