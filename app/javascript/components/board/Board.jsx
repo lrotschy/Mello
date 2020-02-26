@@ -21,7 +21,9 @@ import BoardHeader from './BoardHeader';
 
 class Board extends Component {
   componentDidMount = () => {
-    this.props.onGetBoard();
+    const boardId = this.props.match.params.id;
+
+    this.props.onGetBoard(boardId);
   };
 
   render() {

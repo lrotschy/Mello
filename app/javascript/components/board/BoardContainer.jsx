@@ -8,8 +8,8 @@ import { fetchBoard } from '../../actions/BoardActions'
 
 const mapDispatchToProps = (dispatch) => (
   {
-    onGetBoard() {
-      dispatch(fetchBoard(1));
+    onGetBoard(boardId) {
+      dispatch(fetchBoard(boardId));
     },
   }
 );
