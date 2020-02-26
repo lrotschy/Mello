@@ -1,8 +1,21 @@
 import apiClient from '../lib/ApiClient';
 import * as types from '../constants/ActionTypes';
 
+export function fetchBoardRequest() {
+  return { type: types.FETCH_BOARD_REQUEST };
+}
+
 export function fetchBoardsRequest() {
   return { type: types.FETCH_BOARDS_REQUEST };
+}
+
+export function fetchBoardSuccess(board) {
+  return {
+    type: types.FETCH_BOARD_SUCCESS,
+    payload: {
+      board,
+    },
+  };
 }
 
 export function fetchBoardsSuccess(boards) {
@@ -21,6 +34,13 @@ export function fetchBoards() {
   return function(dispatch) {
     dispatch(fetchBoardsRequest());
     apiClient.getBoards(boards => dispatch(fetchBoardsSuccess(boards)));
+  };
+}
+
+export function fetchBoard(boardId) {
+  return function(dispatch) {
+    dispatch(fetchBoardRequest());
+    apiClient.getBoard(boardId, board => dispatch(fetchBoardSuccess(board)));
   };
 }
 
