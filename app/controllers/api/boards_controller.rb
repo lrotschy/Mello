@@ -1,4 +1,5 @@
 class Api::BoardsController < ApplicationController
+
   def index
     @boards = Board.all
   end
