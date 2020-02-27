@@ -1,12 +1,10 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import TopNav from './shared/TopNav';
 import BoardsDashboardContainer from './dashboard/BoardsDashboardContainer';
 import BoardContainer from './board/BoardContainer';
-
-// import { fetchBoards } from '../actions/BoardActions';
 
 class Application extends React.Component {
   static contextTypes = {
@@ -23,8 +21,6 @@ class Application extends React.Component {
   }
 
   render() {
-    const state = this.context.store.getState();
-
     return (
       <div>
         <TopNav />
