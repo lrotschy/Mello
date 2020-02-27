@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React from "react";
-import List from "./List";
+import ListContainer from "./ListContainer";
 
 
 const mapStateToProps = (state) => {
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
 }
 
 const ListsContainer = ({ lists }) => {
-  const listComponents = lists.map(list => <List title={list.title} key={list.id} />)
+  const listComponents = lists.map(({ title, id }) => <ListContainer title={title} id={id} key={id} />);
+
   return (
     <div id="list-container" className="list-container">
       <div id="existing-lists" className="existing-lists">

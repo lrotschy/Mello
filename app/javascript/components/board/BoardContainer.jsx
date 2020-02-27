@@ -5,12 +5,12 @@ import BoardHeader from "./BoardHeader";
 import ListsContainer from "../list/ListsContainer";
 
 const mapStateToProps = (state, ownProps) => {
-  return { 
+  return {
     board: state.boards.find(board => {
-     return board.id === +ownProps.match.params.id;
+      return board.id === +ownProps.match.params.id;
     })
   }
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => (
   {
@@ -29,8 +29,8 @@ class Board extends Component {
     if (this.props.board) {
       return (
         <div>
-          <BoardHeader title={this.props.board.title} /> 
-  
+          <BoardHeader title={this.props.board.title} />
+
           <main>
             <ListsContainer />
           </main>
