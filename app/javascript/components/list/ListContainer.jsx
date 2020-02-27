@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import CardContainer from '../card/CardContainer'
 
 const mapStateToProps = (state, ownProps) => {
   const cards = state.cards.filter((card) => card.list_id === ownProps.id);
@@ -11,7 +12,15 @@ const mapStateToProps = (state, ownProps) => {
 
 class List extends Component {
   render() {
-    const { title } = this.props;
+    const { cards, title } = this.props;
+    const cardContainers = cards.map((card) => (
+      <CardContainer
+        key={card.id}
+        description={card.description}
+        dueDate={card.due_date}
+        labels={card.labels}
+      />
+    ));
 
     return (
       <div className="list-wrapper">
@@ -30,53 +39,7 @@ class List extends Component {
               </div>
             </div>
             <div id="cards-container" data-id="list-1-cards">
-              <div className="card-background">
-                <div className="card ">
-                  <i className="edit-toggle edit-icon sm-icon"></i>
-                  <div className="card-info">
-                    <div className="card-label green colorblindable"></div>
-                    <div className="card-label yellow colorblindable"></div>
-                    <div className="card-label red colorblindable"></div>
-                    <div className="card-label orange colorblindable"></div>
-                    <div className="card-label blue colorblindable"></div>
-                    <div className="card-label purple colorblindable"></div>
-                    <p>
-                      Cards do many cool things. Click on this card to open it and
-                      learn more...
-                    </p>
-                  </div>
-                  <div className="card-icons">
-                    <i className="clock-icon sm-icon overdue-recent completed">
-                      Aug 4
-                    </i>
-                    <i className="description-icon sm-icon"></i>
-                    <i className="comment-icon sm-icon"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="card-background">
-                <div className="card ">
-                  <i className="edit-toggle edit-icon sm-icon"></i>
-                  <div className="cover-image"></div>
-                  <div className="card-info">
-                    <p>Another list with stuff</p>
-                  </div>
-                  <div className="card-icons">
-                    <i className="clock-icon sm-icon overdue ">Aug 3</i>
-                    <i className="description-icon sm-icon"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="card-background">
-                <div className="card ">
-                  <i className="edit-toggle edit-icon sm-icon"></i>
-                  <div className="cover-image"></div>
-                  <div className="card-info">
-                    <p>Use the + in the top menu to make your first board now.</p>
-                  </div>
-                  <div className="card-icons"></div>
-                </div>
-              </div>
+              {cardContainers}
             </div>
             <div className="add-dropdown add-bottom">
               <div className="card">
