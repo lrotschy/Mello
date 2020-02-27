@@ -1,9 +1,9 @@
 import React from 'react';
 
-const BoardHeader = () => (
+const BoardHeader = ({ title }) => (
   <header>
     <ul>
-      <li id="title">My Title</li>
+      <li id="title">{title}</li>
       <li className="star-icon icon"></li>
       <li className="private private-icon icon">Private</li>
     </ul>

@@ -1,11 +1,20 @@
+import { connect } from 'react-redux';
 import React from "react";
 import List from "./List";
 
-const ListDashboard = () => {
+
+const mapStateToProps = (state) => {
+  return {
+    lists: state.lists,
+  }
+}
+
+const ListsContainer = ({ lists }) => {
+  const listComponents = lists.map(list => <List title={list.title} key={list.id} />)
   return (
     <div id="list-container" className="list-container">
       <div id="existing-lists" className="existing-lists">
-        <List />
+        {listComponents}
       </div>
       <div id="new-list" className="new-list">
         <span>Add a list...</span>
@@ -19,4 +28,4 @@ const ListDashboard = () => {
   );
 };
 
-export default ListDashboard;
+export default connect(mapStateToProps, null)(ListsContainer);
