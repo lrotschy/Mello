@@ -1,26 +1,19 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import CardContainer from '../card/CardContainer'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Card from "../card/Card";
 
 const mapStateToProps = (state, ownProps) => {
-  const cards = state.cards.filter((card) => card.list_id === ownProps.id);
+  const cards = state.cards.filter(card => card.list_id === ownProps.id);
 
   return {
-    cards,
+    cards
   };
 };
 
 class List extends Component {
   render() {
     const { cards, title } = this.props;
-    const cardContainers = cards.map((card) => (
-      <CardContainer
-        key={card.id}
-        description={card.description}
-        dueDate={card.due_date}
-        labels={card.labels}
-      />
-    ));
+    const cardContainers = cards.map(card => <Card key={card.id} {...card} />);
 
     return (
       <div className="list-wrapper">
