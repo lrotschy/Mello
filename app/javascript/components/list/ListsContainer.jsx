@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import React from "react";
 import ListContainer from "./ListContainer";
+import ToggleableAddListForm from "./ToggleableAddListForm"
 
 const mapStateToProps = state => {
   return {
@@ -18,14 +19,7 @@ const ListsContainer = ({ lists }) => {
       <div id="existing-lists" className="existing-lists">
         {listComponents}
       </div>
-      <div id="new-list" className="new-list">
-        <span>Add a list...</span>
-        <input type="text" placeholder="Add a list..." />
-        <div>
-          <input type="submit" className="button" value="Save" />
-          <i className="x-icon icon"></i>
-        </div>
-      </div>
+      <ToggleableAddListForm />
     </div>
   );
 };
