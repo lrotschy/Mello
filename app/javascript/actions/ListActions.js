@@ -14,6 +14,15 @@ export function createListSuccess(list) {
   };
 }
 
+export function updateListSuccess(id, list) {
+  return {
+    type: "UPDATE_LIST_SUCCESS",
+    payload: {
+      list
+    }
+  }
+}
+
 export function createList(boardId, title, callback) {
   return function(dispatch) {
     dispatch(createListRequest());
@@ -26,4 +35,13 @@ export function createList(boardId, title, callback) {
       callback();
     }
   };
+}
+
+export function updateList(list, id) {
+  return function(dispatch) {
+    const handleUpdateCallback = (updatedList) => {
+      dispatch(updateListSuccess(id, updatedList));
+    }
+    apiClient.updateList(list, id, handleUpdateCallback);
+  }
 }

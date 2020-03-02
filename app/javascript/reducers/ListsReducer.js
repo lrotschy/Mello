@@ -7,6 +7,14 @@ export default function listsReducer(state = [], action) {
       });
     case "CREATE_LIST_SUCCESS":
       return state.concat(action.payload.list);
+    case "UPDATE_LIST_SUCCESS": 
+      return state.map((list) => {
+        if (list.id === action.payload.id) {
+          return Object.assign({}, list, {title: action.payload.list.title})
+        } else {
+          return list;
+        }
+      })
     default:
       return state;
   }
