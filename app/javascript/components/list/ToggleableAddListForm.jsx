@@ -1,36 +1,67 @@
-import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { createList } from "../../actions/ListActions";
+import React, { Component } from "react";
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onCreateList: (title, callback) => {
+    dispatch(createList(ownProps.boardId, title, callback));
+  }
+});
 
 class ToggleableAddListForm extends Component {
-  state = {showForm: false}
+  state = {
+    newListNameField: "",
+    showForm: false
+  };
 
   toggleShowForm = () => {
     this.setState(prevState => {
       return {
         showForm: !prevState.showForm
-      }
-    }) 
-  }
+      };
+    });
+  };
+
+  handleNewListNameChange = e => {
+    const { value } = e.target;
+    this.setState({
+      newListNameField: value
+    });
+  };
+
+  handleSaveNewList = () => {
+    this.props.onCreateList(this.state.newListNameField, () => {
+      this.setState({
+        newListNameField: ""
+      });
+    });
+  };
 
   render() {
-    let newListClass = this.state.showForm ? "new-list selected" : "new-list"
+    let newListClass = this.state.showForm ? "new-list selected" : "new-list";
     return (
       <div id="new-list" className={newListClass}>
-        
-        <span
-          onClick={this.toggleShowForm}
-        >
-          Add a list...
-        </span>
+        <span onClick={this.toggleShowForm}>Add a list...</span>
 
-        <input type="text" placeholder="Add a list..." />
+        <input
+          type="text"
+          placeholder="Add a list..."
+          value={this.state.newListNameField}
+          onChange={this.handleNewListNameChange}
+        />
         <div>
-          <input type="submit" className="button" value="Save" />
+          <input
+            type="submit"
+            className="button"
+            value="Save"
+            onClick={this.handleSaveNewList}
+          />
           <i className="x-icon icon" onClick={this.toggleShowForm}></i>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default ToggleableAddListForm;
-
+// export default ToggleableAddListForm;
+export default connect(null, mapDispatchToProps)(ToggleableAddListForm);

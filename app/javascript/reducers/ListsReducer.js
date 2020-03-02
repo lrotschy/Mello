@@ -5,6 +5,8 @@ export default function listsReducer(state = [], action) {
         const { cards, ...listWithoutCards } = list;
         return listWithoutCards;
       });
+    case "CREATE_LIST_SUCCESS":
+      return state.concat(action.payload.list);
     default:
       return state;
   }
