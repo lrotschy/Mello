@@ -30,6 +30,8 @@ class ToggleableAddListForm extends Component {
   };
 
   handleSaveNewList = () => {
+    if (this.state.newListNameField === "") return;
+
     this.props.onCreateList(this.state.newListNameField, () => {
       this.setState({
         newListNameField: ""
