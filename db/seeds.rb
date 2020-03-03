@@ -20,3 +20,7 @@ card2 = Card.create(title: 'Second card', list_id: list1.id, labels: ["red"], du
 card3 = Card.create(title: 'Third card', description: "Here's a description for card 3", list_id: list2.id, labels: ["blue"], due_date: "2020-07-03")
 card4 = Card.create(title: 'Fourth card', description: "Here's a description for card 4", list_id: list2.id, labels: ["purple"], due_date: "2020-05-21")
 card5 = Card.create(title: 'Fifth card', list_id: list2.id, labels: ["orange"], due_date: "1998-05-14")
+
+action1 = Action.create(description: "Action description 1 for First card", card_id: card1.id)
+action2 = Action.create(description: "Action description 2 for First card", card_id: card1.id)
+action3 = Action.create(description: "Action description 3 for Second card", card_id: card2.id)

@@ -5,8 +5,5 @@ json.lists(@board.lists) do |list|
 
   json.cards(list.cards) do |card|
     json.merge! card.attributes
-    # json.id card.id
-    # json.title card.title
-    # the rest of card attributes
   end
 end
