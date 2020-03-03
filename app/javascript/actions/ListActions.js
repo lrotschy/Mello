@@ -18,7 +18,8 @@ export function updateListSuccess(id, list) {
   return {
     type: "UPDATE_LIST_SUCCESS",
     payload: {
-      list
+      list,
+      id
     }
   }
 }

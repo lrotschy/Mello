@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Card from "../card/Card";
-import * as actions from "../../actions/ListActions";
-
 
 const mapStateToProps = (state, ownProps) => {
   const cards = state.cards.filter(card => card.list_id === ownProps.id);
@@ -12,54 +10,28 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onUpdateTitle: (title) => {
-      dispatch(actions.updateList({title}, ownProps.id))  
-    }
-  }
-}
-
 class List extends Component {
   state = {
-    editing: false,
-    listTitle: this.props.title
-  }
-
-  toggleEditing = () => {
-    this.setState(prevState => {
-      return {
-        editing: !prevState.editing
-      }
-    })
-  }
-
-  handleChangeTitle = (e) => {
-    let newTitle = e.target.value
-    this.setState({
-      listTitle: newTitle
-    })
-  }
-
-  handleUpdateTitle = () => {
-    this.props.onUpdateTitle(this.state.listTitle);
-    this.toggleEditing();
+    cardTitle: '',
   }
 
   render() {
-    const { cards, title } = this.props;
+    const { cards, title, isAddingCard } = this.props;
     const cardContainers = cards.map(card => <Card key={card.id} {...card} />);
-
+    const listWrapperClassName = isAddingCard ? 
+      'list-wrapper add-dropdown-active' : 
+      'list-wrapper';
+    const addDropdownClassName = isAddingCard ? 
+      "add-dropdown add-bottom active-card" : 
+      "add-dropdown add-bottom";
+  
     return (
-      <div className="list-wrapper">
+      <div className={listWrapperClassName}>
         <div className="list-background">
           <div className="list">
             <a className="more-icon sm-icon" href=""></a>
             <div>
-              { this.state.editing ? 
-                <input className="list-title" value={this.state.listTitle} onChange={this.handleChangeTitle} onBlur={this.handleUpdateTitle}/> :
-                <p className="list-title" onClick={this.toggleEditing}>{this.state.listTitle}</p>
-              }
+              <p className="list-title">{title}</p>
             </div>
             <div className="add-dropdown add-top">
               <div className="card"></div>
@@ -72,7 +44,7 @@ class List extends Component {
             <div id="cards-container" data-id="list-1-cards">
               {cardContainers}
             </div>
-            <div className="add-dropdown add-bottom">
+            <div className={addDropdownClassName}>
               <div className="card">
                 <div className="card-info"></div>
                 <textarea name="add-card"></textarea>
@@ -94,4 +66,4 @@ class List extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps)(List);

@@ -7,8 +7,7 @@ class Api::CardsController < ApplicationController
     render 'api/shared/error', status: 404
   end
 
-  def create 
-    
+  def create
     list = List.find(params[:list_id])
 
     @card = Card.new(card_params) 
