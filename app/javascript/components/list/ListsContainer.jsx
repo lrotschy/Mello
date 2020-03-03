@@ -12,17 +12,33 @@ const mapStateToProps = state => {
 class ListsContainer extends Component {
   state = {
     listAddingCard: null
-  } 
+  };
+
+  handleAddACardClick = id => {
+    if (!this.state.listAddingCard) {
+      this.setState({
+        listAddingCard: id
+      });
+    }
+  };
+
+  handleAddACardClose = () => {
+    this.setState({
+      listAddingCard: null
+    });
+  };
 
   render() {
     const { lists, boardId } = this.props;
 
     const listComponents = lists.map(({ title, id }) => (
-      <ListContainer 
-        title={title} 
-        id={id} 
-        key={id} 
+      <ListContainer
+        title={title}
+        id={id}
+        key={id}
         isAddingCard={id === this.state.listAddingCard}
+        onAddACardClick={this.handleAddACardClick}
+        onAddACardClose={this.handleAddACardClose}
       />
     ));
 
@@ -34,7 +50,7 @@ class ListsContainer extends Component {
         <ToggleableAddListForm boardId={boardId} />
       </div>
     );
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps, null)(ListsContainer);

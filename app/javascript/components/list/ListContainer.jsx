@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Card from "../card/Card";
+import * as actions from "../../actions/ListActions";
 
 const mapStateToProps = (state, ownProps) => {
   const cards = state.cards.filter(card => card.list_id === ownProps.id);
@@ -10,28 +11,81 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onUpdateTitle: title => {
+      dispatch(actions.updateList({ title }, ownProps.id));
+    },
+    onCreateCard: title => {
+      dispatch(actions.createCard({ title }, ownProps.id));
+    }
+  };
+};
+
 class List extends Component {
   state = {
-    cardTitle: '',
-  }
+    newCardTitle: "",
+    editing: false,
+    listTitle: this.props.title
+  };
+
+  toggleEditing = () => {
+    this.setState(prevState => {
+      return {
+        editing: !prevState.editing
+      };
+    });
+  };
+
+  handleTextFieldUpdate = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleUpdateTitle = () => {
+    this.props.onUpdateTitle(this.state.listTitle);
+    this.toggleEditing();
+  };
+
+  handleAddACardClick = () => {
+    this.props.onAddACardClick(this.props.id);
+  };
+
+  handleSaveNewCard = () => {
+    this.props.onCreateCard(this.state.newCardTitle);
+  };
 
   render() {
     const { cards, title, isAddingCard } = this.props;
     const cardContainers = cards.map(card => <Card key={card.id} {...card} />);
-    const listWrapperClassName = isAddingCard ? 
-      'list-wrapper add-dropdown-active' : 
-      'list-wrapper';
-    const addDropdownClassName = isAddingCard ? 
-      "add-dropdown add-bottom active-card" : 
-      "add-dropdown add-bottom";
-  
+    const listWrapperClassName = isAddingCard
+      ? "list-wrapper add-dropdown-active"
+      : "list-wrapper";
+    const addDropdownClassName = isAddingCard
+      ? "add-dropdown add-bottom active-card"
+      : "add-dropdown add-bottom";
+
     return (
       <div className={listWrapperClassName}>
         <div className="list-background">
           <div className="list">
             <a className="more-icon sm-icon" href=""></a>
             <div>
-              <p className="list-title">{title}</p>
+              {this.state.editing ? (
+                <input
+                  name="listTitle"
+                  className="list-title"
+                  value={this.state.listTitle}
+                  onChange={this.handleTextFieldUpdate}
+                  onBlur={this.handleUpdateTitle}
+                />
+              ) : (
+                <p className="list-title" onClick={this.toggleEditing}>
+                  {this.state.listTitle}
+                </p>
+              )}
             </div>
             <div className="add-dropdown add-top">
               <div className="card"></div>
@@ -47,16 +101,29 @@ class List extends Component {
             <div className={addDropdownClassName}>
               <div className="card">
                 <div className="card-info"></div>
-                <textarea name="add-card"></textarea>
+                <textarea
+                  name="newCardTitle"
+                  value={this.state.newCardTitle}
+                  onChange={this.handleTextFieldUpdate}
+                />
                 <div className="members"></div>
               </div>
-              <a className="button">Add</a>
-              <i className="x-icon icon"></i>
+              <a className="button" onClick={this.handleSaveNewCard}>
+                Add
+              </a>
+              <i
+                className="x-icon icon"
+                onClick={this.props.onAddACardClose}
+              ></i>
               <div className="add-options">
                 <span>...</span>
               </div>
             </div>
-            <div className="add-card-toggle" data-position="bottom">
+            <div
+              className="add-card-toggle"
+              data-position="bottom"
+              onClick={this.handleAddACardClick}
+            >
               Add a card...
             </div>
           </div>
@@ -66,4 +133,4 @@ class List extends Component {
   }
 }
 
-export default connect(mapStateToProps)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(List);
