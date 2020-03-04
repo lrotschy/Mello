@@ -49,7 +49,17 @@ const apiClient = {
   },
   updateList: function(list, id, callback) {
     return axios
-      .put(`/api/lists/${id}`, { title: list.title })
+      .put(`/api/lists/${id}`, list)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError)
+  }, 
+  createCard: function(card, id, callback) {
+    return axios 
+      .post('/api/cards', {
+        list_id: id,
+        card,
+      })
       .then(unwrapData)
       .then(callback)
       .catch(logError)

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Card from "../card/Card";
 import * as actions from "../../actions/ListActions";
+import * as cardActions from "../../actions/CardActions";
 
 const mapStateToProps = (state, ownProps) => {
   const cards = state.cards.filter(card => card.list_id === ownProps.id);
@@ -16,8 +17,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onUpdateTitle: title => {
       dispatch(actions.updateList({ title }, ownProps.id));
     },
-    onCreateCard: title => {
-      dispatch(actions.createCard({ title }, ownProps.id));
+    onCreateCard: (title, callback) => {
+      dispatch(cardActions.createCard({ title }, ownProps.id, callback));
     }
   };
 };
@@ -54,8 +55,16 @@ class List extends Component {
   };
 
   handleSaveNewCard = () => {
-    this.props.onCreateCard(this.state.newCardTitle);
+    this.props.onCreateCard(this.state.newCardTitle, this.handleAddACardClose);
   };
+
+  handleAddACardClose = () => {
+    this.setState({
+      newCardTitle: ''
+    })
+
+    this.props.onAddACardClose();
+  }
 
   render() {
     const { cards, title, isAddingCard } = this.props;
@@ -113,7 +122,7 @@ class List extends Component {
               </a>
               <i
                 className="x-icon icon"
-                onClick={this.props.onAddACardClose}
+                onClick={this.handleAddACardClose}
               ></i>
               <div className="add-options">
                 <span>...</span>

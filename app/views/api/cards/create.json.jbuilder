@@ -1,1 +1,1 @@
-json.merge! @card.attributesra
+json.merge! @card.attributes

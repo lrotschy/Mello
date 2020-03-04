@@ -6,7 +6,10 @@ export default function cardsReducer(state = [], action) {
 
         return allCards.concat(cards);
       }, []);
+    case 'CREATE_CARD_SUCCESS':
+      return state.concat(action.payload.card)
     default:
       return state;
   }
 }
+
