@@ -14,7 +14,15 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onGetBoard: () => {
-    dispatch(fetchBoard(+ownProps.match.params.id));
+    let boardId;
+
+    if (ownProps.match.url.includes("card")) {
+      console.log();
+    } else {
+      boardId = +ownProps.match.params.id;
+    }
+
+    dispatch(fetchBoard(boardId));
   }
 });
 
@@ -24,6 +32,7 @@ class Board extends Component {
   };
 
   render() {
+    console.log("match", this.props.match);
     if (this.props.board) {
       return (
         <div>
