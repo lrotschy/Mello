@@ -13,9 +13,9 @@ export function createCardSuccess(card) {
   };
 }
 
-export function createCard (card, listId, callback) {
+export function createCard(card, listId, callback) {
   return function(dispatch) {
-    dispatch(createCardRequest()); 
+    dispatch(createCardRequest());
 
     apiClient.createCard(card, listId, newCard => {
       dispatch(createCardSuccess(newCard));
@@ -24,5 +24,26 @@ export function createCard (card, listId, callback) {
     if (callback) {
       callback();
     }
-  }
+  };
+}
+
+export function getCardSuccess(card) {
+  return {
+    type: "GET_CARD_SUCCESS",
+    payload: {
+      card
+    }
+  };
+}
+
+export function getCard(id, callback) {
+  return function(dispatch) {
+    apiClient.getCard(id, card => {
+      dispatch(getCardSuccess(card));
+    });
+
+    if (callback) {
+      callback();
+    }
+  };
 }

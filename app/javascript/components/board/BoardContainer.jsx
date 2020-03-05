@@ -8,36 +8,35 @@ const mapStateToProps = (state, ownProps) => {
   let boardId;
   let card;
 
-    if (ownProps.match.url.includes("card")) {
-      card = state.cards.find(card => card.id === +ownProps.match.params.id);
-      if (card) {
-        boardId = card.board_id;
-      } else {
-        boardId = null;
-      }
+  if (ownProps.match.url.includes("card")) {
+    card = state.cards.find(card => card.id === +ownProps.match.params.id);
+    if (card) {
+      boardId = card.board_id;
     } else {
-      boardId = +ownProps.match.params.id;
+      boardId = null;
     }
+  } else {
+    boardId = +ownProps.match.params.id;
+  }
 
-
-    if (boardId) {
-      return {
-        board: state.boards.find(board => board.id === boardId),
-        card: card,
-        boardId: boardId
-      };
-    } else {
-      return {
-        board: null,
-        card: null,
-        boardId: null
-      };
-    }
+  if (boardId) {
+    return {
+      board: state.boards.find(board => board.id === boardId),
+      card: card,
+      boardId: boardId
+    };
+  } else {
+    return {
+      board: null,
+      card: null,
+      boardId: null
+    };
+  }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetBoard: (boardId) => {
+    onGetBoard: boardId => {
       dispatch(fetchBoard(boardId));
     }
   };
@@ -61,9 +60,7 @@ class Board extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    console.log('board id in update ' + this.props.boardId)
     if (this.props.boardId !== prevProps.boardId) {
-      console.log("in conditional" + this.props.)
       this.props.onGetBoard(+this.props.boardId);
     }
   }

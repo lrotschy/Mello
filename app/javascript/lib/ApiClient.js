@@ -52,17 +52,24 @@ const apiClient = {
       .put(`/api/lists/${id}`, list)
       .then(unwrapData)
       .then(callback)
-      .catch(logError)
-  }, 
+      .catch(logError);
+  },
   createCard: function(card, id, callback) {
-    return axios 
-      .post('/api/cards', {
+    return axios
+      .post("/api/cards", {
         list_id: id,
-        card,
+        card
       })
       .then(unwrapData)
       .then(callback)
-      .catch(logError)
+      .catch(logError);
+  },
+  getCard: function(id, callback) {
+    return axios
+      .get(`/api/cards/${id}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
   }
 };
 

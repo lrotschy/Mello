@@ -3,7 +3,7 @@ class Card < ApplicationRecord
   has_many :actions
   delegate :board_id, to: :list
   
-  def attributes 
+  def attributes
     super.merge('board_id' => board_id) 
   end
 end
