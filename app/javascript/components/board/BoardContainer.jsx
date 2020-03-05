@@ -5,31 +5,68 @@ import BoardHeader from "./BoardHeader";
 import ListsContainer from "../list/ListsContainer";
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    board: state.boards.find(board => {
-      return board.id === +ownProps.match.params.id;
-    })
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onGetBoard: () => {
-    let boardId;
+  let boardId;
+  let card;
 
     if (ownProps.match.url.includes("card")) {
-      console.log();
+      card = state.cards.find(card => card.id === +ownProps.match.params.id);
+      if (card) {
+        boardId = card.board_id;
+      } else {
+        boardId = null;
+      }
     } else {
       boardId = +ownProps.match.params.id;
     }
 
-    dispatch(fetchBoard(boardId));
-  }
-});
+
+    if (boardId) {
+      return {
+        board: state.boards.find(board => board.id === boardId),
+        card: card,
+        boardId: boardId
+      };
+    } else {
+      return {
+        board: null,
+        card: null,
+        boardId: null
+      };
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetBoard: (boardId) => {
+      dispatch(fetchBoard(boardId));
+    }
+  };
+};
 
 class Board extends Component {
   componentDidMount = () => {
-    this.props.onGetBoard();
+    let boardId;
+    const { url } = this.props.match;
+    if (url.match(new RegExp("^/boards/"))) {
+      boardId = +this.props.match.params.id;
+    } else {
+      if (this.props.card) {
+        boardId = this.props.card.board_id;
+      } else {
+        boardId = null;
+      }
+    }
+    if (!boardId) return null;
+    this.props.onGetBoard(boardId);
   };
+
+  componentDidUpdate(prevProps) {
+    console.log('board id in update ' + this.props.boardId)
+    if (this.props.boardId !== prevProps.boardId) {
+      console.log("in conditional" + this.props.)
+      this.props.onGetBoard(+this.props.boardId);
+    }
+  }
 
   render() {
     console.log("match", this.props.match);
