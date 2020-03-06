@@ -66,7 +66,6 @@ class Board extends Component {
   }
 
   render() {
-    console.log("match", this.props.match);
     if (this.props.board) {
       return (
         <div>
