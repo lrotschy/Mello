@@ -30,7 +30,7 @@ class CardModal extends Component {
             title={title}
             boardId={board_id}
           />
-          <CardModalMain />
+          <CardModalMain card={this.props.card} />
           <CardModalAside />
         </div>
       </div>
