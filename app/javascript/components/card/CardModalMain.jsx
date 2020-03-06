@@ -1,6 +1,7 @@
 import React from "react";
 import CardModalLabels from "./CardModalLabels";
 import CardModalDate from "./CardModalDate";
+import CardModalForm from "./CardModalForm";
 
 const CardModalMain = ({ card }) => {
   return (
@@ -11,20 +12,7 @@ const CardModalMain = ({ card }) => {
             <CardModalLabels labels={card.labels} />
             <CardModalDate card={card} />
           </ul>
-          <form className="description">
-            <p>Description</p>
-            <span id="description-edit" className="link">
-              Edit
-            </span>
-            <p className="textarea-overlay">
-              Cards have a symbol to indicate if they contain a description.
-            </p>
-            <p id="description-edit-options" className="hidden">
-              You have unsaved edits on this field.{" "}
-              <span className="link">View edits</span> -{" "}
-              <span className="link">Discard</span>
-            </p>
-          </form>
+          <CardModalForm description={card.description} />
         </li>
         <li className="comment-section">
           <h2 className="comment-icon icon">Add Comment</h2>
