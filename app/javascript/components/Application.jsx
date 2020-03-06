@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import BoardContainer from "./board/BoardContainer";
+import CardModalContainer from "./card/CardModalContainer";
 
 class Application extends React.Component {
   static contextTypes = {
